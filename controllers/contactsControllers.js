@@ -1,4 +1,8 @@
 import contactsService from "../services/contactsServices.js";
+import HttpError from "../helpers/HttpError.js";
+import crypto from "node:crypto";
+import { createContactSchema } from "../schemas/contactsSchemas.js";
+import validateBody from "../helpers/validateBody.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
@@ -14,7 +18,7 @@ export const getOneContact = async (req, res, next) => {
     const { id } = req.params;
     const contact = await contactsService.getContactById(id);
     if (!contact) {
-      return res.sendStatus(404);
+      throw HttpError(404);
     }
     res.status(200).send(contact);
   } catch (error) {
@@ -27,7 +31,7 @@ export const deleteContact = async (req, res, next) => {
     const { id } = req.params;
     const contact = await contactsService.removeContact(id);
     if (!contact) {
-      return res.sendStatus(404);
+      throw HttpError(404);
     }
     res.status(200).send(contact);
   } catch (error) {
@@ -35,6 +39,17 @@ export const deleteContact = async (req, res, next) => {
   }
 };
 
-export const createContact = (req, res) => {};
+export const createContact = async (req, res) => {
+  try {
+    const { error, value } = createContactSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.message });
+    }
+    const newContact = await contactsService.addContact(value); // Викликаємо функцію addContact з даними з req.body
+    res.status(201).json(newContact);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const updateContact = (req, res) => {};
