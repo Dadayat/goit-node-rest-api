@@ -49,4 +49,28 @@ async function addContact(contact) {
   return newContact;
 }
 
-export default { listContacts, addContact, removeContact, getContactById };
+async function updatedContact(contactId, newData) {
+  const contacts = await listContacts();
+  const index = contacts.findIndex((contact) => contact.id === contactId);
+
+  if (index === -1) {
+    return null;
+  }
+
+  const originalContact = contacts[index];
+
+  const updateContact = { ...originalContact, ...newData };
+
+  contacts[index] = updateContact;
+
+  await writeContacts(contacts);
+
+  return updateContact;
+}
+export default {
+  listContacts,
+  addContact,
+  removeContact,
+  getContactById,
+  updatedContact,
+};
