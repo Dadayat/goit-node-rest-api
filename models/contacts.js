@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { mongooseError } from '../helpers/mongooseError.js';
 
 const { Schema, model } = mongoose;
+
 const contactShema = new Schema(
     {
         name: {
@@ -30,4 +31,4 @@ const contactShema = new Schema(
 contactShema.post('save', mongooseError);
 
 
-export const Contact = model('contact', contactSchema);
+export const Contact = model('contact', contactShema);

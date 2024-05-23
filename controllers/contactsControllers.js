@@ -1,7 +1,7 @@
 import HttpError from '../helpers/HttpError.js';
 import wrapper from '../helpers/wrapper.js';
 
-import { Contact } from '../schemas/contact.js';
+import { Contact } from '../models/contacts.js';
 
 export const getAllContacts = wrapper(async (req, res) => {
   const result = await Contact.find();
