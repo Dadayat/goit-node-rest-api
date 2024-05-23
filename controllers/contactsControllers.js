@@ -45,7 +45,7 @@ export const createContact = async (req, res, next) => {
   try {
     const { error, value } = createContactSchema.validate(req.body);
     if (error) {
-      return next(HttpError(400, error.message));
+      throw HttpError(400);
     }
     const newContact = await contactsService.addContact(value);
     res.status(201).json(newContact);
@@ -59,7 +59,7 @@ export const updateContact = async (req, res, next) => {
     // const { error } = updateContactSchema.validate(req.body);
     validateBody(updateContactSchema)(req, res, next);
     if (error) {
-      return next(HttpError(400, error.message));
+      throw HttpError(400);
     }
 
     const updContact = await contactsService.updatedContact(
@@ -68,7 +68,7 @@ export const updateContact = async (req, res, next) => {
     );
 
     if (!updContact) {
-      return next(HttpError(404, error.message));
+      throw HttpError(404);
     }
 
     res.status(200).json(updContact);
