@@ -5,7 +5,7 @@ import { mongooseError } from '../helpers/mongooseError.js';
 
 const { Schema, model } = mongoose;
 
-const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+export const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
   {
