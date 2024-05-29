@@ -9,7 +9,7 @@ import {
   register,
   getCurrent,
   logout, login
-} from '../controllers/authControllers.js';
+} from '../controllers/userControllers.js';
 
 userRouter.post('/register', validateBody(registerSchema), register);
 
