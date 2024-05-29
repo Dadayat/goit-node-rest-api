@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import contactsRouter from './routes/contactsRouter.js';
-import authUserRouter from './routes/authUserRouter.js';
+import userRouter from './routes/userRouter.js';
 
 export const app = express();
 
@@ -14,7 +14,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/users', authUserRouter);
+app.use('/api/users', userRouter);
 app.use('/api/contacts', contactsRouter);
 
 app.use((_, res) => {
