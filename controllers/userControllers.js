@@ -10,7 +10,6 @@ import gravatar from 'gravatar';
 import path from 'node:path'
 import fs from "fs/promises";
 import Jimp from 'jimp';
-
 import { nanoid } from 'nanoid';
 
 const avatarsDir = path.resolve("public", "avatars");
@@ -23,9 +22,7 @@ export const register = wrapper(async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-
   const avatarURL = gravatar.url(email);
-
   const verificationToken = nanoid();
 
   await sendVerificationEmail(email,verificationToken);
