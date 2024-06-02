@@ -4,16 +4,22 @@ const userRouter = express.Router();
 
 import { validateBody } from '../helpers/validateBody.js';
 import { authenticate } from '../helpers/authenticate.js';
-import { registerSchema, loginSchema } from '../schemas/userSchemas.js';
+import { registerSchema, loginSchema, emailSchema } from '../schemas/userSchemas.js';
 import {
   register,
   getCurrent,
   logout, login,
-  updateAvatar
+  updateAvatar,
+  verifyEmail,
+  resendVerifyEmail
 } from '../controllers/userControllers.js';
 import { upload } from '../helpers/upload.js';
 
 userRouter.post('/register', validateBody(registerSchema), register);
+
+userRouter.get('/verify/:verificationCode', verifyEmail)
+
+userRouter.post('/verify', validateBody(emailSchema), resendVerifyEmail)
 
 userRouter.post('/login', validateBody(loginSchema), login);
 
